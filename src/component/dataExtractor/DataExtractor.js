@@ -10,7 +10,6 @@ export async function extractDataFromExcel(file) {
         const sheetName = workbook.SheetNames[0];
         const sheet = workbook.Sheets[sheetName];
 
-        // Extract headers (column names) from the first row
         const headers = [];
         const range = XLSX.utils.decode_range(sheet["!ref"]);
         for (let C = range.s.c; C <= range.e.c; C++) {
@@ -21,8 +20,8 @@ export async function extractDataFromExcel(file) {
 
         const data = XLSX.utils.sheet_to_json(sheet);
 
-        console.log("Extracted Data:", data); // Log the extracted data
-        console.log("Headers:", headers); // Log the headers
+        console.log("Extracted Data:", data);
+        console.log("Headers:", headers);
 
         resolve({ data, columns: headers });
       } catch (error) {

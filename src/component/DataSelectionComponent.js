@@ -12,7 +12,6 @@ function DataSelectionComponent({
 }) {
   return (
     <div>
-      {/* Job Number Dropdown */}
       <Select
         value={selectedJobNumber}
         onChange={onJobNumberChange}
@@ -26,7 +25,6 @@ function DataSelectionComponent({
         ))}
       </Select>
 
-      {/* Header Dropdown */}
       <Select
         value={selectedHeader}
         onChange={onHeaderChange}

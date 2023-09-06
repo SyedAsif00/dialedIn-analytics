@@ -1,4 +1,3 @@
-// PrivateRoute.js
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom"; // Import Navigate
 import { auth } from "../firebase/FirebaseSetup";

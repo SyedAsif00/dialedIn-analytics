@@ -1,8 +1,7 @@
-// routes.js
 import React from "react";
 import Login from "./auth/Login";
 import AnalyticsDashboard from "./pages/AnalyticsDashboard";
-import PrivateRoute from "../src/auth/ProtectedRoutes"; // Import your PrivateRoute component
+import PrivateRoute from "../src/auth/ProtectedRoutes";
 
 const routes = [
   { path: "/", element: <Login /> },
