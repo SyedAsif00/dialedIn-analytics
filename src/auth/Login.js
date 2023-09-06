@@ -1,55 +1,3 @@
-// import React, { useState } from "react";
-// import { signInWithEmailAndPassword } from "firebase/auth";
-// import { auth } from "../firebase/FirebaseSetup";
-// import { useNavigate } from "react-router-dom"; // Import the useNavigate hook
-
-// function Login() {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [error, setError] = useState(null);
-//   const navigate = useNavigate(); // Initialize the useNavigate hook
-
-//   const handleSignIn = async () => {
-//     try {
-//       setError(null);
-//       const userCredential = await signInWithEmailAndPassword(
-//         auth,
-//         email,
-//         password
-//       );
-//       const user = userCredential.user;
-//       console.log(user);
-
-//       // Redirect to the "/analytics" route on successful login
-//       navigate("/analytics");
-//     } catch (error) {
-//       setError(error.message);
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <h2>Login</h2>
-//       <input
-//         type="email"
-//         placeholder="Email"
-//         value={email}
-//         onChange={(e) => setEmail(e.target.value)}
-//       />
-//       <input
-//         type="password"
-//         placeholder="Password"
-//         value={password}
-//         onChange={(e) => setPassword(e.target.value)}
-//       />
-//       <button onClick={handleSignIn}>Sign In</button>
-//       {error && <p style={{ color: "red" }}>{error}</p>}
-//     </div>
-//   );
-// }
-
-// export default Login;
-
 import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -65,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase/FirebaseSetup"; // Make sure to import your Firebase setup
+import { auth } from "../firebase/FirebaseSetup";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const defaultTheme = createTheme();
@@ -88,7 +36,6 @@ export default function SignIn() {
       const user = userCredential.user;
       console.log(user);
       navigate("/analytics");
-      // You can add your own logic for handling the successful login here.
     } catch (error) {
       setError(error.message);
     }
@@ -142,10 +89,7 @@ export default function SignIn() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
+
             <Button
               type="submit"
               fullWidth
@@ -154,18 +98,7 @@ export default function SignIn() {
             >
               Sign In
             </Button>
-            <Grid container>
-              {/* <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid> */}
-              {/* <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid> */}
-            </Grid>
+            <Grid container></Grid>
           </Box>
           {error && <Typography color="error">{error}</Typography>}
         </Box>
