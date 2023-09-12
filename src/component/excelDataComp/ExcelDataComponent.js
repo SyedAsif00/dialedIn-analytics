@@ -1,102 +1,90 @@
 import React, { useState, useEffect } from "react";
-import FileUploadComponent from "../FileUploadComponent";
-import DataSelectionComponent from "../DataSelectionComponent";
-import ChartComponent from "../ReactChart/Chart";
-import { extractDataFromExcel } from "../dataExtractor/DataExtractor";
+import jsonData from "../../DataFile.json";
+import { Select } from "antd";
+import {
+  BudgetCostChart,
+  BudgetHoursChart,
+  LineItemAmountChart,
+  CostRateOverrideChart,
+  GrossProfitChart,
+} from "../analyticsChart/AnalyticsCharts";
+import { Grid } from "@mui/material";
+const { Option } = Select;
 
-function ExcelDataComponent() {
-  const [excelData, setExcelData] = useState([]);
-  const [columnNames, setColumnNames] = useState([]);
-  const [selectedColumn, setSelectedColumn] = useState("Budget Cost");
-  const [loading, setLoading] = useState(false);
-  const [jobNumbers, setJobNumbers] = useState([]);
+const ExcelDataComponent = () => {
   const [selectedJobNumber, setSelectedJobNumber] = useState("");
-  const [chartData, setChartData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (selectedColumn && excelData.length > 0) {
-      processDataForChart(selectedColumn);
-    }
-  }, [excelData, selectedColumn]);
+    const fetchInitialData = async () => {
+      const firstJobNumber = Array.from(
+        new Set(jsonData.map((item) => item["Job Number"]))
+      )[0];
+      setSelectedJobNumber(firstJobNumber);
+    };
+
+    fetchInitialData();
+  }, []);
 
   useEffect(() => {
-    if (selectedJobNumber && selectedColumn) {
-      updateChartData(selectedJobNumber, selectedColumn);
-    }
-  }, [selectedJobNumber, selectedColumn]);
-
-  const handleFileChange = async (e) => {
-    const file = e.target.files[0];
-    try {
-      setLoading(true);
-      const { data, columns } = await extractDataFromExcel(file);
-      setExcelData(data);
-      setColumnNames(columns);
-
-      const uniqueJobNumbers = [
-        ...new Set(
-          data
-            .filter((item) => Object.values(item).some((value) => value !== ""))
-            .map((item) => item["Job Number"])
-        ),
-      ];
-      setJobNumbers(uniqueJobNumbers);
-
-      if (uniqueJobNumbers.length > 0) {
-        setSelectedJobNumber(uniqueJobNumbers[0]);
-      }
-
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      console.error("Error extracting data:", error);
-    }
-  };
-
-  const processDataForChart = (columnName) => {
-    if (!excelData || excelData.length === 0) {
-      return;
-    }
-
-    const chartData = excelData.map((item) => ({
-      label: item.label,
-      value: item[columnName],
-    }));
-
-    setChartData(chartData);
-  };
-
-  const updateChartData = (jobNumber, header) => {
-    if (!excelData || excelData.length === 0) {
-      return;
-    }
-
-    const filteredData = excelData.filter(
-      (item) => item["Job Number"] === jobNumber
+    const filteredData = jsonData.filter(
+      (item) => item["Job Number"] === selectedJobNumber
     );
 
-    const chartData = filteredData.map((item) => ({
-      label: item.label,
-      value: item[header],
-    }));
+    setFilteredData(filteredData);
+    setIsLoading(false);
+  }, [selectedJobNumber]);
 
-    setChartData(chartData);
+  const handleJobNumberChange = (value) => {
+    setSelectedJobNumber(value);
   };
 
   return (
     <div>
-      <h1>Analytics Page</h1>
-      <FileUploadComponent onFileChange={handleFileChange} loading={loading} />
-      <DataSelectionComponent
-        jobNumbers={jobNumbers}
-        selectedJobNumber={selectedJobNumber}
-        selectedHeader={selectedColumn}
-        onJobNumberChange={setSelectedJobNumber}
-        onHeaderChange={setSelectedColumn}
-      />
-      {chartData.length > 0 && <ChartComponent chartData={chartData} />}
+      <h2>Analytical Data</h2>
+      <label>Select Job Number:</label>
+      <Select
+        onChange={handleJobNumberChange}
+        value={selectedJobNumber}
+        style={{ width: "200px", marginLeft: "15px" }}
+      >
+        <Option value="">Select a Job Number</Option>
+        {Array.from(new Set(jsonData.map((item) => item["Job Number"]))).map(
+          (jobNumber) => (
+            <Option key={jobNumber} value={jobNumber}>
+              {jobNumber}
+            </Option>
+          )
+        )}
+      </Select>
+
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <div>
+          <h3>Charts for {selectedJobNumber}</h3>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6} md={4} lg={4}>
+              <BudgetCostChart data={filteredData} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={4} lg={4}>
+              <BudgetHoursChart data={filteredData} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={4} lg={4}>
+              <LineItemAmountChart data={filteredData} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={4} lg={4}>
+              <CostRateOverrideChart data={filteredData} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={4} lg={4}>
+              <GrossProfitChart data={filteredData} />
+            </Grid>
+          </Grid>
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default ExcelDataComponent;
