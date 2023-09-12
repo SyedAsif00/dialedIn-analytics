@@ -17,8 +17,8 @@ import {
 export const BudgetCostChart = ({ data }) => {
   return (
     <div>
-      <h3>Budget Cost</h3>
-      <ResponsiveContainer width="100%" height={400}>
+      <h4 style={{ color: "#808080" }}>Budget Cost</h4>
+      <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="Date" />
@@ -34,8 +34,8 @@ export const BudgetCostChart = ({ data }) => {
 export const BudgetHoursChart = ({ data }) => {
   return (
     <div>
-      <h3>Budget Hours</h3>
-      <ResponsiveContainer width="100%" height={400}>
+      <h4 style={{ color: "#808080" }}>Budget Hours</h4>
+      <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="Date" />
@@ -51,8 +51,8 @@ export const BudgetHoursChart = ({ data }) => {
 export const LineItemAmountChart = ({ data }) => {
   return (
     <div>
-      <h3>Line Item Amount</h3>
-      <ResponsiveContainer width="100%" height={400}>
+      <h4 style={{ color: "#808080" }}>Line Item Amount</h4>
+      <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="Date" />
@@ -68,8 +68,8 @@ export const LineItemAmountChart = ({ data }) => {
 export const CostRateOverrideChart = ({ data }) => {
   return (
     <div>
-      <h3>Cost Rate Override</h3>
-      <ResponsiveContainer width="100%" height={400}>
+      <h4 style={{ color: "#808080" }}>Cost Rate Override</h4>
+      <ResponsiveContainer width="100%" height={300}>
         <AreaChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="Date" />
@@ -85,8 +85,8 @@ export const CostRateOverrideChart = ({ data }) => {
 export const GrossProfitChart = ({ data }) => {
   return (
     <div>
-      <h3>Gross Profit</h3>
-      <ResponsiveContainer width="100%" height={400}>
+      <h4 style={{ color: "#808080" }}>Gross Profit</h4>
+      <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="Date" />

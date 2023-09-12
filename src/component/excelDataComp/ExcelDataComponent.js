@@ -8,7 +8,7 @@ import {
   CostRateOverrideChart,
   GrossProfitChart,
 } from "../analyticsChart/AnalyticsCharts";
-import { Grid } from "@mui/material";
+import { Grid, Card } from "@mui/material";
 const { Option } = Select;
 
 const ExcelDataComponent = () => {
@@ -42,7 +42,7 @@ const ExcelDataComponent = () => {
 
   return (
     <div>
-      <h2>Analytical Data</h2>
+      <h2>Analytics Explorer</h2>
       <label>Select Job Number:</label>
       <Select
         onChange={handleJobNumberChange}
@@ -64,21 +64,32 @@ const ExcelDataComponent = () => {
       ) : (
         <div>
           <h3>Charts for {selectedJobNumber}</h3>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={4} lg={4}>
-              <BudgetCostChart data={filteredData} />
+          <Grid container spacing={4}>
+            <Grid item xs={12} sm={6} md={8} lg={8}>
+              <Card elevation={10} style={{ padding: "10px" }}>
+                <BudgetCostChart data={filteredData} />
+              </Card>
             </Grid>
             <Grid item xs={12} sm={6} md={4} lg={4}>
-              <BudgetHoursChart data={filteredData} />
+              <Card elevation={10} style={{ padding: "10px" }}>
+                <BudgetHoursChart data={filteredData} />
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6} md={8} lg={8}>
+              <Card elevation={10} style={{ padding: "10px" }}>
+                <LineItemAmountChart data={filteredData} />
+              </Card>
+            </Grid>
+
+            <Grid item xs={12} sm={6} md={4} lg={4}>
+              <Card elevation={10} style={{ padding: "10px" }}>
+                <CostRateOverrideChart data={filteredData} />
+              </Card>
             </Grid>
             <Grid item xs={12} sm={6} md={4} lg={4}>
-              <LineItemAmountChart data={filteredData} />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4} lg={4}>
-              <CostRateOverrideChart data={filteredData} />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4} lg={4}>
-              <GrossProfitChart data={filteredData} />
+              <Card elevation={10} style={{ padding: "10px" }}>
+                <GrossProfitChart data={filteredData} />
+              </Card>
             </Grid>
           </Grid>
         </div>
